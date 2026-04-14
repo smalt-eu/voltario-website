@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+---
+
+<Layout title="Impressum" description={`Impressum der ${siteConfig.firmenname} – gesetzliche Anbieterkennzeichnung nach § 5 TMG.`} hideContact={true}>
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Startseite</a>
+        <span class="sep">/</span>
+        <span class="current">Impressum</span>
+      </nav>
+      <h1>Impressum</h1>
+      <p>Angaben gemäß § 5 TMG</p>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="impressum prose">
+
+        <h2>Voltario Elektrotechnik GmbH</h2>
+        <p>
+          Pfannschmidtstraße 21<br />
+          13125 Berlin<br />
+          Deutschland
+        </p>
+
+        <h3>Vertretungsberechtigter Geschäftsführer</h3>
+        <p>
+          Kefah Rezek
+        </p>
+
+        <h3>Kontakt</h3>
+        <p>
+          Telefon: <a href="tel:+493091732433">+49 30 91732433</a><br />
+          E-Mail: <a href="mailto:info@voltario-elektrotechnik.de">info@voltario-elektrotechnik.de</a>
+        </p>
+
+        <h3>Handelsregister</h3>
+        <p>
+          Registergericht: Amtsgericht Charlottenburg<br />
+          Registernummer: HRB 283035 B
+        </p>
+
+        <h3>Umsatzsteuer-Identifikationsnummer</h3>
+        <p>
+          USt-ID gemäß § 27a UStG: DE 313 368 179
+        </p>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .impressum {
+    max-width: 720px;
+  }
+
+  .impressum h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-md);
+    color: var(--color-dark);
+  }
+
+  .impressum h3 {
+    font-size: var(--text-lg);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-sm);
+    color: var(--color-dark);
+  }
+
+  .impressum p {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: 1.8;
+  }
+
+  .impressum a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .impressum a:hover {
+    text-decoration: underline;
+  }
+</style>

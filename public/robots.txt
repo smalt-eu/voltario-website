@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://voltario-elektrotechnik.de/sitemap-index.xml

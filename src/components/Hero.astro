@@ -1,0 +1,328 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryHref?: string;
+  image?: string;
+  imageAlt?: string;
+  eyebrow?: string;
+  heroPhoto?: string;
+  heroPhotoAlt?: string;
+}
+
+const {
+  title,
+  subtitle,
+  ctaText = 'Kontakt aufnehmen',
+  ctaHref = '/kontakt',
+  ctaSecondaryText,
+  ctaSecondaryHref,
+  image,
+  imageAlt = 'Hero Bild',
+  eyebrow,
+  heroPhoto,
+  heroPhotoAlt = '',
+} = Astro.props;
+---
+
+<section class:list={['hero', { 'hero--split': heroPhoto }]} style={image ? `--hero-image: url('${image}')` : ''}>
+  <div class="hero__overlay"></div>
+  <div class="container hero__inner">
+    <div class="hero__content">
+      {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
+      <h1 class="hero__title" set:html={title} />
+      {subtitle && <p class="hero__subtitle">{subtitle}</p>}
+      <div class="hero__actions">
+        <a href={ctaHref} class="btn btn-accent">{ctaText}</a>
+        {ctaSecondaryText && ctaSecondaryHref && (
+          <a href={ctaSecondaryHref} class="btn btn-outline-white">
+            {ctaSecondaryText}
+          </a>
+        )}
+      </div>
+    </div>
+    {heroPhoto && (
+      <div class="hero__photo">
+        <div class="hero__photo-glow"></div>
+        <img src={heroPhoto} alt={heroPhotoAlt} />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--color-primary-dark);
+    background-image: var(--hero-image, none);
+    background-size: cover;
+    background-position: center calc(50% + var(--scroll-y, 0px) * 0.3);
+    padding-top: var(--navbar-height, 72px);
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero__content {
+    max-width: 680px;
+  }
+
+  /* Split layout when heroPhoto is present */
+  .hero--split {
+    align-items: stretch;
+    min-height: 92vh;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: transparent !important;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 80% 30%, hsl(218, 55%, 22%) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 15% 90%, hsl(210, 40%, 18%) 0%, transparent 60%),
+      linear-gradient(135deg, hsl(210, 30%, 7%) 0%, hsl(210, 25%, 11%) 55%, hsl(210, 22%, 9%) 100%) !important;
+  }
+
+  /* Hide the default overlay element for split layout — backgrounds live on .hero--split itself */
+  .hero--split .hero__overlay {
+    display: none;
+  }
+
+  /* Subtle grid pattern overlay (matches subpage heroes) */
+  .hero--split::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Red glow accent (matches subpage heroes) */
+  .hero--split::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -8%;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(218, 70%, 45% / 0.22) 0%, hsl(218, 70%, 45% / 0.06) 45%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero--split .hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1.3fr;
+    align-items: end;
+    gap: var(--space-2xl);
+    padding-bottom: 0;
+  }
+
+  .hero--split .hero__content {
+    max-width: 620px;
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero--split .hero__eyebrow {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero--split .hero__title {
+    margin-bottom: var(--space-lg);
+    letter-spacing: -0.02em;
+  }
+
+  .hero--split .hero__subtitle {
+    max-width: 540px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .hero__photo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    align-self: end;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+
+  .hero__photo-glow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 70%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, hsl(218, 70%, 45% / 0.18) 0%, transparent 70%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+
+  .hero__photo img {
+    position: relative;
+    display: block;
+    /* Fluid size: scales from ~55vh on small laptops to ~95vh on large monitors */
+    height: clamp(520px, 70vw, 95vh);
+    max-height: 95vh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom right;
+    /* Fluid translate: stays centered on narrow screens, shifts right on wide screens */
+    transform: translateX(clamp(0%, 2vw, 18%));
+    filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.4));
+  }
+
+  /* On wider screens we can afford a bigger photo and more shift */
+  @media (min-width: 1400px) {
+    .hero__photo img {
+      max-width: 140%;
+      transform: translateX(20%);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero--split {
+      min-height: auto;
+      padding-top: var(--navbar-height, 72px);
+    }
+
+    .hero--split .hero__inner {
+      grid-template-columns: 1fr;
+      text-align: left;
+      padding-top: var(--space-2xl);
+      padding-bottom: var(--space-2xl);
+      gap: var(--space-2xl);
+    }
+
+    .hero--split .hero__title {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .hero--split .hero__subtitle {
+      font-size: var(--text-base);
+      max-width: 100%;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Content first, photo below on mobile */
+    .hero__photo {
+      order: 1;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    .hero__photo-glow {
+      width: 60%;
+      height: 30%;
+    }
+
+    .hero__photo img {
+      /* Reset desktop fluid sizing */
+      height: auto;
+      max-height: 38vh;
+      max-width: 100%;
+      object-position: bottom center;
+      transform: none;
+    }
+
+    .hero--split .hero__content {
+      max-width: 100%;
+      padding-bottom: 0;
+    }
+
+    .hero--split .hero__actions {
+      justify-content: flex-start;
+    }
+
+    .hero--split .hero__subtitle {
+      max-width: 100%;
+    }
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1.12;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__subtitle {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+    max-width: 500px;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  /* Entrance animations */
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow { animation: heroFadeUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero__title   { animation: heroFadeUp 0.7s ease both; animation-delay: 0.25s; }
+    .hero__subtitle{ animation: heroFadeUp 0.7s ease both; animation-delay: 0.4s; }
+    .hero__actions { animation: heroFadeUp 0.7s ease both; animation-delay: 0.55s; }
+    .hero__photo   { animation: heroFadeIn 0.9s ease both; animation-delay: 0.2s; }
+  }
+</style>
+
+<script>
+  // Parallax scroll — updates CSS custom property on root
+  window.addEventListener('scroll', () => {
+    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+  }, { passive: true });
+</script>

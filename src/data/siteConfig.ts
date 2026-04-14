@@ -1,0 +1,15 @@
+export const siteConfig = {
+  firmenname: 'Voltario Elektrotechnik GmbH',
+  inhaber: 'Kefah Rezek',
+  stadt: 'Berlin',
+  adresse: 'Pfannschmidtstraße 21, 13125 Berlin',
+  telefon: '+49 30 91732433',
+  email: 'info@voltario-elektrotechnik.de',
+  tagline: 'Ihr zuverlässiger Elektro-Fachbetrieb aus Berlin für die Region.',
+  description: 'Voltario Elektrotechnik GmbH – Ganzheitliche Photovoltaiklösungen, Elektroinstallationen, Wallbox & Wärmepumpen in Berlin und Brandenburg. Persönlicher Service aus der Region.',
+  yearsInBusiness: '5',
+  employeeCount: '5',
+  projectCount: '100',
+  locationCount: '1',
+  websiteUrl: 'https://voltario-elektrotechnik.de',
+} as const;

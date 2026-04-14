@@ -1,0 +1,191 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { siteConfig } from '../data/siteConfig';
+import { staedte } from '../data/staedte';
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  hideContact?: boolean;
+  contactTitle?: string;
+  contactSubtitle?: string;
+  jsonLd?: object | object[];
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  image = '/images/voltario-logo.png',
+  hideContact = false,
+  contactTitle,
+  contactSubtitle,
+  jsonLd,
+} = Astro.props;
+
+const siteName = siteConfig.firmenname;
+const fullTitle = title === siteName ? title : `${title} – ${siteName}`;
+const canonicalURL = Astro.url.href;
+const siteUrl = siteConfig.websiteUrl;
+
+// Load leistungen for OfferCatalog in LocalBusiness schema
+const leistungen = await getCollection('leistungen');
+
+// LocalBusiness / Electrician JSON-LD
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Electrician',
+  '@id': `${siteUrl}/#organization`,
+  name: siteConfig.firmenname,
+  legalName: siteConfig.firmenname,
+  url: siteUrl,
+  logo: `${siteUrl}/images/voltario-logo.png`,
+  image: `${siteUrl}/images/voltario-logo.png`,
+  telephone: siteConfig.telefon,
+  email: siteConfig.email,
+  priceRange: '€€',
+  description: siteConfig.description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Pfannschmidtstraße 21',
+    addressLocality: 'Berlin',
+    postalCode: '13125',
+    addressRegion: 'BE',
+    addressCountry: 'DE',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 52.5877,
+    longitude: 13.4404,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '17:00',
+    },
+  ],
+  areaServed: staedte.map((s) => ({
+    '@type': 'City',
+    name: s.name,
+  })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Leistungen der Voltario Elektrotechnik GmbH',
+    itemListElement: leistungen
+      .sort((a, b) => a.data.order - b.data.order)
+      .map((l) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: l.data.title,
+          description: l.data.description,
+          url: `${siteUrl}/leistungen/${l.slug}`,
+        },
+      })),
+  },
+};
+
+// Merge page-specific JSON-LD with the global LocalBusiness schema
+const allJsonLd = [
+  localBusinessJsonLd,
+  ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+];
+
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&display=swap';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Theme + geo -->
+    <meta name="theme-color" content="#0b1a3a" />
+    <meta name="geo.region" content="DE-BE" />
+    <meta name="geo.placename" content="Berlin" />
+    <meta name="geo.position" content="52.5877;13.4404" />
+    <meta name="ICBM" content="52.5877, 13.4404" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="de_DE" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <title>{fullTitle}</title>
+
+    <!-- Fonts (non-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={fontUrl} onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href={fontUrl} /></noscript>
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- Structured Data -->
+    {allJsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    {!hideContact && <ContactSection title={contactTitle} subtitle={contactSubtitle} />}
+    <Footer />
+
+    <button id="back-to-top" aria-label="Nach oben">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+
+    <script>
+      const btn = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        btn?.classList.toggle('visible', window.scrollY > 500);
+      });
+      btn?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    </script>
+
+    <script>
+      // Global scroll-in animation observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('[data-animate], [data-stagger]').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

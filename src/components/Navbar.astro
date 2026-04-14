@@ -1,0 +1,349 @@
+---
+import { siteConfig } from '../data/siteConfig';
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { label: 'Startseite', href: '/' },
+  { label: 'Über uns', href: '/ueber-uns' },
+  { label: 'Leistungen', href: '/leistungen' },
+  { label: 'Projekte', href: '/projekte' },
+  { label: 'Standorte', href: '/standorte' },
+  { label: 'Kontakt', href: '/kontakt' },
+];
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="navbar" id="navbar">
+  <div class="container navbar__inner">
+    <a href="/" class="navbar__logo" aria-label={`${siteConfig.firmenname} – Startseite`}>
+      <img src="/images/voltario-logo.png" alt={siteConfig.firmenname} class="navbar__logo-img" />
+    </a>
+
+    <nav class="navbar__nav" aria-label="Hauptnavigation">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={['navbar__link', { 'navbar__link--active': isActive(link.href) }]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href={`tel:${siteConfig.telefon.replace(/\s/g, '')}`} class="navbar__phone">
+      <span class="navbar__phone-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg>
+      </span>
+      <span class="navbar__phone-number">{siteConfig.telefon}</span>
+    </a>
+    <a href="/kontakt" class="btn btn-accent navbar__cta">Kontakt</a>
+
+    <button
+      class="navbar__burger"
+      id="burger"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="navbar__mobile" id="mobile-menu" hidden>
+    <nav aria-label="Mobile Navigation">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={['navbar__mobile-link', { 'navbar__mobile-link--active': isActive(link.href) }]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a href="/kontakt" class="btn btn-primary" style="margin-top: 1rem; width: 100%; justify-content: center;">
+        Kontakt aufnehmen
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const navbar = document.getElementById('navbar')!;
+  const burger = document.getElementById('burger')!;
+  const menu = document.getElementById('mobile-menu')!;
+
+  // Scroll effect + progress bar
+  const hero = document.querySelector('.hero') as HTMLElement | null;
+  function getHeroThreshold() {
+    return hero ? hero.offsetHeight - 72 : 400;
+  }
+
+  function updateScroll() {
+    const scrolled = window.scrollY > getHeroThreshold();
+    navbar.classList.toggle('navbar--scrolled', scrolled);
+
+    const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    navbar.style.setProperty('--scroll-progress', String(Math.min(progress, 1)));
+  }
+
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  updateScroll();
+
+  // Mobile toggle
+  burger.addEventListener('click', () => {
+    const open = !menu.hidden;
+    menu.hidden = open;
+    burger.setAttribute('aria-expanded', String(!open));
+    burger.classList.toggle('navbar__burger--open', !open);
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: hsl(210, 25%, 8% / 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+    --scroll-progress: 0;
+  }
+
+  /* Scroll progress indicator */
+  .navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transform: scaleX(var(--scroll-progress, 0));
+    transform-origin: left;
+    transition: transform 80ms linear;
+    opacity: 0;
+    transition: opacity var(--transition-base), transform 80ms linear;
+  }
+
+  .navbar--scrolled::after {
+    opacity: 1;
+  }
+
+  .navbar--scrolled {
+    background: hsl(210, 15%, 98% / 0.92);
+    border-bottom: 1px solid hsl(210, 10%, 88% / 0.6);
+    box-shadow: 0 1px 0 hsl(210, 20%, 10% / .04),
+                0 4px 24px hsl(210, 20%, 10% / .06);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    height: 72px;
+  }
+
+  /* Logo */
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .navbar__logo-img {
+    height: 72px;
+    width: auto;
+    flex-shrink: 0;
+    transition: filter var(--transition-base), height var(--transition-base);
+    filter: brightness(0) invert(1);
+  }
+
+  .navbar--scrolled .navbar__logo-img {
+    height: 72px;
+    filter: none;
+  }
+
+  /* Nav links */
+  .navbar__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-left: auto;
+  }
+
+  .navbar__link {
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.90);
+    text-decoration: none;
+    transition: color var(--transition-fast), background var(--transition-fast), text-shadow var(--transition-base);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar--scrolled .navbar__link {
+    color: var(--color-primary);
+    text-shadow: none;
+  }
+
+  .navbar__link:hover,
+  .navbar__link--active {
+    color: var(--color-accent);
+    background: transparent;
+  }
+
+  .navbar--scrolled .navbar__link:hover,
+  .navbar--scrolled .navbar__link--active {
+    color: var(--color-accent-dark);
+    background: transparent;
+  }
+
+  /* Phone */
+  .navbar__phone {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: rgba(255,255,255,0.90);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    transition: color var(--transition-fast), text-shadow var(--transition-base);
+    white-space: nowrap;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar--scrolled .navbar__phone {
+    color: var(--color-primary);
+    text-shadow: none;
+  }
+
+  .navbar__phone:hover {
+    color: var(--color-accent);
+  }
+
+  .navbar--scrolled .navbar__phone:hover {
+    color: var(--color-accent-dark);
+  }
+
+  .navbar__phone-icon { font-size: 0.9rem; }
+
+  @media (min-width: 900px) {
+    .navbar__phone {
+      display: flex;
+    }
+  }
+
+  /* CTA */
+  .navbar__cta {
+    padding: 0.5rem 1.25rem;
+    font-size: var(--text-sm);
+    display: none;
+    color: var(--color-white);
+  }
+
+  .navbar__cta:hover {
+    color: var(--color-white);
+  }
+
+  @media (min-width: 900px) {
+    .navbar__cta {
+      display: inline-flex;
+    }
+  }
+
+  /* Burger */
+  .navbar__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+  }
+
+  .navbar__burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-white);
+    border-radius: 2px;
+    transition: all var(--transition-base);
+  }
+
+  .navbar--scrolled .navbar__burger span {
+    background: var(--color-dark);
+  }
+
+  .navbar__burger--open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .navbar__burger--open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar__burger--open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (min-width: 768px) {
+    .navbar__burger {
+      display: none;
+    }
+  }
+
+  /* Desktop nav hidden on mobile */
+  @media (max-width: 767px) {
+    .navbar__nav {
+      display: none;
+    }
+  }
+
+  /* Mobile menu */
+  .navbar__mobile {
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-lg);
+  }
+
+  .navbar__mobile nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .navbar__mobile-link {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  .navbar__mobile-link:hover,
+  .navbar__mobile-link--active {
+    background: transparent;
+    color: var(--color-accent-dark);
+  }
+</style>

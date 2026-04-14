@@ -1,0 +1,587 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
+import { staedte } from '../data/staedte';
+import { siteConfig } from '../data/siteConfig';
+import { whyUs } from '../data/whyUs';
+
+const leistungen = (await getCollection('leistungen')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const projekte = (await getCollection('projekte'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const standorte = (await getCollection('standorte')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const stats = [
+  { value: `${siteConfig.yearsInBusiness}+`, label: 'Jahre Erfahrung' },
+  { value: `${siteConfig.projectCount}+`, label: 'Abgeschlossene Projekte' },
+  { value: siteConfig.locationCount, label: `Standort in ${siteConfig.stadt}` },
+  { value: `${siteConfig.employeeCount}+`, label: 'Fachkräfte im Team' },
+];
+---
+
+<Layout
+  title={siteConfig.firmenname}
+  contactTitle={`Bereit, Ihr Projekt mit ${siteConfig.firmenname} zu starten?`}
+  contactSubtitle="Kontaktieren Sie uns jetzt für eine unverbindliche Beratung und ein individuelles Angebot – wir melden uns innerhalb von 24 Stunden."
+>
+  <!-- Hero -->
+  <Hero
+    eyebrow={`Ihr Partner in ${siteConfig.stadt}`}
+    title={siteConfig.tagline}
+    subtitle={siteConfig.description}
+    ctaText="Kostenlos anfragen"
+    ctaHref="/kontakt"
+    ctaSecondaryText="Leistungen ansehen"
+    ctaSecondaryHref="/leistungen"
+  />
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="container stats__grid" data-stagger>
+      {stats.map((stat) => (
+        <div class="stat">
+          <p class="stat__value">{stat.value}</p>
+          <p class="stat__label">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="eyebrow">Was wir bieten</span>
+        <h2>Unsere Leistungen</h2>
+        <div class="divider"></div>
+        <p>Von Photovoltaik bis Elektroinstallation – wir bieten ganzheitliche Energielösungen aus einer Hand.</p>
+      </div>
+    </div>
+
+    <!-- Slider (full-width overflow) -->
+    <div class="slider-wrap">
+      <button class="slider-arrow slider-arrow--prev" id="leistungen-prev" aria-label="Zurück">‹</button>
+      <div class="slider" id="leistungen-slider">
+        {leistungen.map((l) => (
+          <div class="slider-item">
+            <Card
+              variant="service"
+              title={l.data.title}
+              description={l.data.description}
+              icon={l.data.icon}
+              image={l.data.image}
+              href={`/leistungen/${l.slug}`}
+            />
+          </div>
+        ))}
+      </div>
+      <button class="slider-arrow slider-arrow--next" id="leistungen-next" aria-label="Weiter">›</button>
+    </div>
+
+    <div class="container">
+      <div class="section-footer">
+        <a href="/leistungen" class="btn btn-outline">Alle Leistungen ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-content">
+          <span class="eyebrow">Warum {siteConfig.firmenname}</span>
+          <h2>Qualität, die man sieht. Verlässlichkeit, die man spürt.</h2>
+          <div class="divider divider--left"></div>
+          <p>
+            Als Elektro-Fachbetrieb aus {siteConfig.stadt} stehen wir für fachgerechte Arbeit,
+            transparente Kommunikation und persönlichen Service. Von der Photovoltaikanlage
+            bis zur Elektroinstallation – wir übernehmen Verantwortung für jedes Projekt.
+          </p>
+          <ul class="why-list">
+            {whyUs.map((item) => (
+              <li>
+                <span class="why-icon">✓</span>
+                <div>
+                  <strong>{item}</strong>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <a href="/kontakt" class="btn btn-primary">Jetzt anfragen</a>
+        </div>
+        <div class="why-image">
+          <img src="/images/voltario-logo.png" alt={`${siteConfig.firmenname} Logo`} loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent projects -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Referenzprojekte</span>
+        <h2>Unsere neuesten Projekte</h2>
+        <div class="divider"></div>
+        <p>Jedes Projekt erzählt eine Geschichte. Überzeugen Sie sich selbst von unserer Arbeit.</p>
+      </div>
+      <div class="grid-3" data-stagger>
+        {projekte.map((p) => (
+          <Card
+            variant="project"
+            title={p.data.title}
+            description={p.data.description}
+            image={p.data.coverImage}
+            href={`/projekte/${p.slug}`}
+            meta={p.data.standort}
+            badge={p.data.leistung}
+          />
+        ))}
+      </div>
+      <div class="section-footer">
+        <a href="/projekte" class="btn btn-outline">Alle Projekte ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  {standorte[0] && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="standort-strip">
+          <div class="standort-strip__text">
+            <span class="eyebrow">Unser Standort</span>
+            <h2>{standorte[0].data.city}</h2>
+            <p>{standorte[0].data.address}</p>
+            <p class="standort-hours">{standorte[0].data.hours}</p>
+            <div class="standort-strip__contacts">
+              <a href={`tel:${standorte[0].data.phone.replace(/\s/g,'')}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg>
+                {standorte[0].data.phone}
+              </a>
+              <a href={`mailto:${standorte[0].data.email}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                {standorte[0].data.email}
+              </a>
+            </div>
+            <div class="standort-strip__actions">
+              <a href="/standorte" class="btn btn-primary">Standort & Einzugsgebiet</a>
+              <a href="/kontakt" class="btn btn-outline">Kontakt aufnehmen</a>
+            </div>
+          </div>
+          <div class="standort-strip__cities">
+            <p class="cities-label">Wir sind tätig in</p>
+            <div class="cities-list">
+              {staedte.map((s) => (
+                <a href={`/standorte/${s.slug}`} class="city-tag">{s.name}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+</Layout>
+
+<style>
+  /* Stats */
+  .stats {
+    background: var(--color-primary);
+    padding: var(--space-xl) 0;
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .stats__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .stat + .stat {
+    border-left: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .stat__value {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+
+  .stat__label {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+
+  /* Section footer */
+  .section-footer {
+    text-align: center;
+    margin-top: var(--space-2xl);
+  }
+
+  /* Why section */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .why-image {
+      order: -1;
+    }
+  }
+
+  .why-content {
+    max-width: 620px;
+  }
+
+  .why-content .eyebrow {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .why-content h2 {
+    margin-bottom: var(--space-md);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .why-content > p {
+    color: var(--color-text-light);
+    margin-bottom: var(--space-2xl);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .why-list li {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .why-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .why-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-gradient);
+    color: var(--color-primary);
+    font-size: var(--text-base);
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .why-list strong {
+    display: block;
+    font-size: var(--text-base);
+    color: var(--color-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .why-list p {
+    font-size: var(--text-sm);
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .why-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-xl) 0;
+  }
+
+  .why-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, hsl(218, 70%, 45% / 0.10) 0%, transparent 65%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  .why-image img {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.10));
+  }
+
+
+  /* ---- STANDORT STRIP ---- */
+  .standort-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (max-width: 768px) {
+    .standort-strip { grid-template-columns: 1fr; }
+  }
+
+  .standort-strip .eyebrow {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-dark);
+    margin-bottom: var(--space-xs);
+  }
+
+  .standort-strip__text h2 { margin-bottom: 0.25rem; }
+
+  .standort-strip__text > p {
+    font-size: var(--text-base);
+    color: var(--color-text-light);
+  }
+
+  .standort-hours {
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-light);
+  }
+
+  .standort-strip__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: var(--space-md) 0;
+  }
+
+  .standort-strip__contacts a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .standort-strip__contacts a:hover { text-decoration: underline; }
+
+  .standort-strip__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  /* Cities */
+  .standort-strip__cities {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-2xl);
+  }
+
+  @media (max-width: 768px) {
+    .standort-strip__cities {
+      border-left: none;
+      border-top: 1px solid var(--color-border);
+      padding-left: 0;
+      padding-top: var(--space-xl);
+    }
+  }
+
+  .cities-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-md);
+  }
+
+  .cities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .city-tag {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .city-tag:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+  }
+
+  /* ---- SLIDER ---- */
+  .slider-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0 var(--space-xl);
+  }
+
+  .slider {
+    display: flex;
+    gap: var(--space-lg);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: var(--space-sm) 0 var(--space-lg);
+    flex: 1;
+  }
+
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .slider-item {
+    flex: 0 0 clamp(280px, 35vw, 420px);
+    scroll-snap-align: start;
+  }
+
+  /* Make cards fill full height of the slide */
+  .slider-item > :global(.card) {
+    height: 100%;
+  }
+
+  .slider-arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-dark);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .slider-arrow:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+  }
+
+  .slider-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .slider-arrow:disabled:hover {
+    background: var(--color-white);
+    border-color: var(--color-border);
+    color: var(--color-dark);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (max-width: 640px) {
+    .slider-wrap {
+      padding: 0 var(--space-md);
+    }
+
+    .slider-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const slider = document.getElementById('leistungen-slider')!;
+  const prev = document.getElementById('leistungen-prev') as HTMLButtonElement;
+  const next = document.getElementById('leistungen-next') as HTMLButtonElement;
+
+  function getScrollAmount() {
+    const item = slider.querySelector<HTMLElement>('.slider-item');
+    return item ? item.offsetWidth + 24 : 300; // 24 = gap
+  }
+
+  function updateButtons() {
+    prev.disabled = slider.scrollLeft <= 4;
+    next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 4;
+  }
+
+  prev.addEventListener('click', () => {
+    slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+
+  next.addEventListener('click', () => {
+    slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  slider.addEventListener('scroll', updateButtons);
+  updateButtons();
+</script>

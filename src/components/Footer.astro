@@ -1,0 +1,205 @@
+---
+import { siteConfig } from '../data/siteConfig';
+import { getCollection } from 'astro:content';
+
+const year = new Date().getFullYear();
+const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <div class="footer__logo">
+        <img src="/images/voltario-logo.png" alt={siteConfig.firmenname} class="footer__logo-img" />
+      </div>
+      <p>{siteConfig.description.slice(0, 150)}{siteConfig.description.length > 150 ? '…' : ''}</p>
+      <div class="footer__contact-info">
+        <a href={`tel:${siteConfig.telefon.replace(/\s/g, '')}`}>{siteConfig.telefon}</a>
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Leistungen</h4>
+      <ul>
+        {allLeistungen.map((l) => (
+          <li><a href={`/leistungen/${l.slug}`}>{l.data.title}</a></li>
+        ))}
+        <li><a href="/leistungen">Alle Leistungen</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Standort</h4>
+      <ul>
+        <li><a href="/standorte">Unser Standort</a></li>
+        <li><a href="/standorte#einzugsgebiet">Einzugsgebiet</a></li>
+        <li><a href="/kontakt">Anfahrt & Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Unternehmen</h4>
+      <ul>
+        <li><a href="/ueber-uns">Über uns</a></li>
+        <li><a href="/projekte">Referenzprojekte</a></li>
+        <li><a href="/kontakt">Kontakt</a></li>
+        <li><a href="/impressum">Impressum</a></li>
+        <li><a href="/datenschutz">Datenschutz</a></li>
+        <li><a href="/agb">AGB</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p>&copy; {year} {siteConfig.firmenname}. Alle Rechte vorbehalten.</p>
+      <div class="footer__bottom-links">
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href="/agb">AGB</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-primary-dark);
+    color: rgba(255,255,255,0.7);
+    padding-top: var(--space-3xl);
+    border-top: 3px solid var(--color-accent);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  @media (max-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Brand */
+  .footer__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: var(--space-md);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--color-white);
+  }
+
+  .footer__logo-img {
+    height: 120px;
+    width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer__brand p {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+    max-width: 320px;
+  }
+
+  .footer__contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .footer__contact-info a {
+    font-size: var(--text-sm);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__contact-info a:hover {
+    color: var(--color-accent);
+  }
+
+  /* Columns */
+  .footer__col h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer__col a {
+    font-size: var(--text-sm);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__col a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer__col h4 {
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+  }
+
+  /* Bottom bar */
+  .footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: var(--space-lg) 0;
+  }
+
+  .footer__bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .footer__bottom p {
+    font-size: var(--text-xs);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer__bottom-links {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .footer__bottom-links a {
+    font-size: var(--text-xs);
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__bottom-links a:hover {
+    color: rgba(255,255,255,0.7);
+  }
+</style>

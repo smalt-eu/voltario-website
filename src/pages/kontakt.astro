@@ -1,0 +1,376 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import { getCollection } from 'astro:content';
+
+const allStandorte = await getCollection('standorte');
+const office = allStandorte[0];
+const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+---
+
+<Layout
+  title="Kontakt"
+  description={`Nehmen Sie Kontakt mit ${siteConfig.firmenname} auf – per Telefon, E-Mail oder über unser Kontaktformular.`}
+  hideContact={true}
+>
+  <div class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Startseite</a>
+        <span class="sep">/</span>
+        <span class="current">Kontakt</span>
+      </nav>
+      <h1>Kontakt aufnehmen</h1>
+      <p>Wir freuen uns auf Ihre Anfrage und melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="kontakt-grid">
+        <!-- Form -->
+        <div class="form-wrap">
+          <h2>Nachricht senden</h2>
+          <p class="form-intro">Füllen Sie das Formular aus und wir nehmen so schnell wie möglich Kontakt mit Ihnen auf.</p>
+
+          <form id="kontakt-form" class="form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="vorname">Vorname *</label>
+                <input type="text" id="vorname" name="vorname" required autocomplete="given-name" />
+              </div>
+              <div class="form-group">
+                <label for="nachname">Nachname *</label>
+                <input type="text" id="nachname" name="nachname" required autocomplete="family-name" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-Mail-Adresse *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="telefon">Telefon</label>
+              <input type="tel" id="telefon" name="telefon" autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+              <label for="leistung">Gewünschte Leistung</label>
+              <select id="leistung" name="leistung">
+                <option value="">Bitte wählen ...</option>
+                {allLeistungen.map((l) => (
+                  <option value={l.slug}>{l.data.title}</option>
+                ))}
+                <option value="OTH">Sonstiges</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="nachricht">Ihre Nachricht *</label>
+              <textarea id="nachricht" name="nachricht" rows="5" required placeholder="Beschreiben Sie kurz Ihr Vorhaben..."></textarea>
+            </div>
+
+            <!-- Honeypot -->
+            <div style="display: none;" aria-hidden="true">
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-group form-group--checkbox">
+              <label class="checkbox-label">
+                <input type="checkbox" name="datenschutz" required />
+                <span>
+                  Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zu. *
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-submit">
+              Nachricht absenden
+            </button>
+          </form>
+
+          <div id="form-success" class="form-success" hidden>
+            <span class="success-icon">✓</span>
+            <h3>Nachricht erfolgreich gesendet!</h3>
+            <p>Vielen Dank für Ihre Anfrage. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="kontakt-sidebar">
+          <h2>Direktkontakt</h2>
+
+          {office && (
+            <div class="standort-contact">
+              <h3>{office.data.city}</h3>
+              <ul>
+                <li>
+                  <span class="si"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                  <span>{office.data.address}</span>
+                </li>
+                <li>
+                  <span class="si"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg></span>
+                  <a href={`tel:${office.data.phone.replace(/\s/g,'')}`}>{office.data.phone}</a>
+                </li>
+                <li>
+                  <span class="si"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <a href={`mailto:${office.data.email}`}>{office.data.email}</a>
+                </li>
+                <li>
+                  <span class="si"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                  <span>{office.data.hours}</span>
+                </li>
+              </ul>
+            </div>
+          )}
+        </aside>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.getElementById('kontakt-form') as HTMLFormElement | null;
+  const success = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet ...';
+
+    const data = new FormData(form);
+    const leistungSelect = form.querySelector<HTMLSelectElement>('select[name="leistung"]');
+    const selectedOption = leistungSelect?.selectedOptions[0];
+    const leistungId = selectedOption?.value || '';
+    const leistungName = leistungId ? selectedOption?.textContent?.trim() : '';
+    const leadOrigin = new URLSearchParams(window.location.search).get('lead_origin');
+    const customerName = `${data.get('vorname') || ''} ${data.get('nachname') || ''}`.trim();
+
+    try {
+      const res = await fetch('https://api2.smalt.eu/api/v1/leads/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: customerName,
+          email: data.get('email') || undefined,
+          phone_number: data.get('telefon') || undefined,
+          required_service: data.get('nachricht') || undefined,
+          service_interested_in: leistungId ? { id: leistungId, name: leistungName } : undefined,
+          acquisition_medium: leadOrigin ? 'organic' : 'website',
+          acquisition_source: leadOrigin ? 'google_my_business' : 'partner_website',
+          partner_name: { name: 'Voltario' },
+          sub_channel_source_detail: 'Website Form',
+        }),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      form.hidden = true;
+      success!.hidden = false;
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Nachricht absenden';
+      alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+    }
+  });
+</script>
+
+<style>
+  .kontakt-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-3xl);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .kontakt-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Form */
+  .form-wrap h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .form-intro {
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl);
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 480px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-dark);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.7rem 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-dark);
+    background: var(--color-bg);
+    transition: border-color var(--transition-fast);
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px hsl(218, 70%, 45% / 0.10),
+                0 1px 4px hsl(218, 70%, 45% / 0.08);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 130px;
+  }
+
+  .form-group--checkbox .checkbox-label {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .form-group--checkbox input[type="checkbox"] {
+    width: auto;
+    flex-shrink: 0;
+    margin-top: 3px;
+    accent-color: var(--color-primary);
+  }
+
+  .form-group--checkbox a {
+    color: var(--color-primary);
+  }
+
+  .btn-submit {
+    align-self: flex-start;
+    padding: 0.85rem 2rem;
+  }
+
+  /* Success */
+  .form-success {
+    text-align: center;
+    padding: var(--space-2xl);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-xl);
+  }
+
+  .success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto var(--space-md);
+  }
+
+  .form-success h3 {
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .form-success p {
+    color: var(--color-text-light);
+  }
+
+  /* Sidebar */
+  .kontakt-sidebar {
+    position: sticky;
+    top: var(--sticky-top);
+  }
+
+  .kontakt-sidebar h2 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .standort-contact {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+
+  .standort-contact h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .standort-contact ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .standort-contact li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .standort-contact a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .standort-contact a:hover {
+    text-decoration: underline;
+  }
+
+  .si {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--color-text-light);
+    margin-top: 1px;
+  }
+</style>

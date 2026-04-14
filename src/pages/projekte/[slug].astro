@@ -1,0 +1,309 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import BreadcrumbJsonLd from '../../components/BreadcrumbJsonLd.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projekte = await getCollection('projekte');
+  return projekte.map((p) => ({
+    params: { slug: p.slug },
+    props: { projekt: p },
+  }));
+}
+
+const { projekt } = Astro.props;
+const { Content } = await projekt.render();
+
+// Load leistung title
+const leistungenData = await getCollection('leistungen');
+const leistung = leistungenData.find((l) => l.slug === projekt.data.leistung);
+
+// Related projects (same leistung, excluding self)
+const alleProjekte = await getCollection('projekte');
+const aehnliche = alleProjekte
+  .filter((p) => p.data.leistung === projekt.data.leistung && p.slug !== projekt.slug)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const formattedDate = projekt.data.date.toLocaleDateString('de-DE', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<Layout
+  title={projekt.data.title}
+  description={projekt.data.description}
+  image={projekt.data.coverImage}
+>
+  <BreadcrumbJsonLd items={[
+    { name: 'Startseite', url: '/' },
+    { name: 'Projekte', url: '/projekte' },
+    { name: projekt.data.title, url: `/projekte/${projekt.slug}` },
+  ]} />
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Startseite</a>
+        <span class="sep">/</span>
+        <a href="/projekte">Projekte</a>
+        {leistung && (
+          <>
+            <span class="sep">/</span>
+            <a href={`/leistungen/${leistung.slug}`}>{leistung.data.title}</a>
+          </>
+        )}
+        <span class="sep">/</span>
+        <span class="current">{projekt.data.title}</span>
+      </nav>
+      <h1>{projekt.data.title}</h1>
+      <p>{projekt.data.description}</p>
+    </div>
+  </div>
+
+  <!-- Cover image -->
+  <div class="cover-image">
+    <div class="container">
+      <img src={projekt.data.coverImage} alt={projekt.data.title} />
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <section class="section">
+    <div class="container">
+      <div class="projekt-layout">
+        <article class="prose">
+          <Content />
+        </article>
+
+        <aside class="projekt-sidebar">
+          <!-- Meta card -->
+          <div class="meta-card">
+            <h3>Projektdaten</h3>
+            <dl class="meta-list">
+              <div>
+                <dt>Auftraggeber</dt>
+                <dd>{projekt.data.client}</dd>
+              </div>
+              <div>
+                <dt>Abgeschlossen</dt>
+                <dd>{formattedDate}</dd>
+              </div>
+              <div>
+                <dt>Standort</dt>
+                <dd>
+                  <a href={`/standorte/${projekt.data.standort.toLowerCase()}`}>
+                    {projekt.data.standort}
+                  </a>
+                </dd>
+              </div>
+              {leistung && (
+                <div>
+                  <dt>Leistung</dt>
+                  <dd>
+                    <a href={`/leistungen/${leistung.slug}`}>{leistung.data.title}</a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+
+            {projekt.data.tags.length > 0 && (
+              <div class="tags">
+                {projekt.data.tags.map((tag) => (
+                  <span class="badge">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div class="sidebar-cta">
+            <p>Ähnliches Projekt geplant?</p>
+            <a href="/kontakt" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              Jetzt anfragen
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image gallery -->
+  {projekt.data.images.length > 0 && (
+    <section class="section section--alt">
+      <div class="container">
+        <h2 class="gallery-title">Projektbilder</h2>
+        <div class="gallery">
+          {projekt.data.images.map((src, i) => (
+            <img
+              src={src}
+              alt={`${projekt.data.title} – Bild ${i + 1}`}
+              loading="lazy"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Similar projects -->
+  {aehnliche.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Weitere Referenzen</span>
+          <h2>Ähnliche Projekte</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="grid-3">
+          {aehnliche.map((p) => (
+            <Card
+              variant="project"
+              title={p.data.title}
+              description={p.data.description}
+              image={p.data.coverImage}
+              href={`/projekte/${p.slug}`}
+              meta={p.data.standort}
+            />
+          ))}
+        </div>
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="/projekte" class="btn btn-outline">Alle Projekte ansehen</a>
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  /* Cover */
+  .cover-image {
+    background: var(--color-dark);
+    padding: 0 0 var(--space-2xl);
+  }
+
+  .cover-image img {
+    width: 100%;
+    max-height: 540px;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Layout */
+  .projekt-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-2xl);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .projekt-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Sidebar */
+  .projekt-sidebar {
+    position: sticky;
+    top: calc(72px + 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .meta-card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .meta-card h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .meta-list > div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.75rem;
+  }
+
+  .meta-list > div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .meta-list dt {
+    font-weight: 600;
+    color: var(--color-text-light);
+  }
+
+  .meta-list dd { color: var(--color-dark); }
+
+  .meta-list a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .meta-list a:hover { text-decoration: underline; }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: var(--space-md);
+  }
+
+  .sidebar-cta {
+    background: var(--color-primary-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+  }
+
+  .sidebar-cta p {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Gallery */
+  .gallery-title {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+  }
+
+  .gallery img:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+  }
+</style>

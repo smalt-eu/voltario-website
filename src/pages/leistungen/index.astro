@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const leistungen = (await getCollection('leistungen')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Layout
+  title="Leistungen"
+  description="Hochbau, Sanierung und Dacharbeiten in Bayern – Baumeister GmbH bietet alle Bauleistungen aus einer Hand."
+>
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Startseite</a>
+        <span class="sep">/</span>
+        <span class="current">Leistungen</span>
+      </nav>
+      <h1>Unsere Leistungen</h1>
+      <p>Vom Rohbau bis zur schlüsselfertigen Übergabe – wir begleiten Sie durch alle Phasen Ihres Bauprojekts.</p>
+    </div>
+  </div>
+
+  <!-- Services grid -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {leistungen.map((l) => (
+          <Card
+            variant="service"
+            title={l.data.title}
+            description={l.data.description}
+            icon={l.data.icon}
+            image={l.data.image}
+            href={`/leistungen/${l.slug}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed feature list -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Im Detail</span>
+        <h2>Was Sie von uns erwarten können</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="feature-grid">
+        {leistungen.map((l) => (
+          <div class="feature-block">
+            <div>
+              <h3>{l.data.title}</h3>
+              <ul>
+                {l.data.features.map((f) => (
+                  <li>
+                    <span class="check">✓</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <a href={`/leistungen/${l.slug}`} class="btn btn-outline" style="margin-top: 1rem;">
+                Mehr erfahren
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <h2>Ihr Projekt beginnt hier.</h2>
+      <p style="color: var(--color-text-light); margin: 1rem auto 2rem; max-width: 560px; font-size: var(--text-lg);">
+        Kontaktieren Sie uns für ein unverbindliches Gespräch. Wir beraten Sie gerne zu Ihrem Vorhaben.
+      </p>
+      <a href="/kontakt" class="btn btn-primary">Jetzt Beratungsgespräch vereinbaren</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .feature-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .feature-block {
+    display: block;
+  }
+
+  .feature-block h3 {
+    margin-bottom: var(--space-md);
+    font-size: var(--text-2xl);
+  }
+
+  .feature-block ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.5rem 2rem;
+  }
+
+  .feature-block li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  .check {
+    color: var(--color-primary);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .feature-block {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Seite nicht gefunden" description="Die gesuchte Seite existiert nicht.">
+  <div class="not-found">
+    <div class="container not-found__inner">
+      <p class="not-found__code">404</p>
+      <h1>Seite nicht gefunden</h1>
+      <p class="not-found__text">
+        Die gesuchte Seite existiert leider nicht oder wurde verschoben.
+      </p>
+      <div class="not-found__actions">
+        <a href="/" class="btn btn-primary">Zur Startseite</a>
+        <a href="/kontakt" class="btn btn-outline">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: 72px;
+  }
+
+  .not-found__inner {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+  }
+
+  .not-found__code {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    font-weight: 800;
+    color: var(--color-border);
+    line-height: 1;
+    margin-bottom: var(--space-md);
+  }
+
+  .not-found h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .not-found__text {
+    font-size: var(--text-lg);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl);
+  }
+
+  .not-found__actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
