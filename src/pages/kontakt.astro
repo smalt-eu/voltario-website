@@ -166,14 +166,18 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
           service_interested_in: leistungId ? { id: leistungId, name: leistungName } : undefined,
           acquisition_medium: leadOrigin ? 'organic' : 'website',
           acquisition_source: leadOrigin ? 'google_my_business' : 'partner_website',
-          partner_name: { name: 'Voltario' },
+          partner_name: { name: 'Voltario Elektrotechnik' },
           sub_channel_source_detail: 'Website Form',
         }),
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      form.hidden = true;
+      // Reset button state and hide the form via display (hidden attribute
+      // is overridden by the form's own display rules)
+      btn.disabled = false;
+      btn.textContent = 'Nachricht absenden';
+      form.style.display = 'none';
       success!.hidden = false;
     } catch {
       btn.disabled = false;

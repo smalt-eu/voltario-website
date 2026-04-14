@@ -128,7 +128,7 @@ import { certifications } from '../data/certifications';
       <div class="team-solo">
         <div class="team-solo__image">
           <div class="team-solo__glow"></div>
-          <img src="/images/voltario-logo.png" alt={`${siteConfig.firmenname} Logo`} loading="lazy" />
+          <img src="/images/hero-kefah.png" alt={`${team[0].name} – Geschäftsführer ${siteConfig.firmenname}`} loading="lazy" />
         </div>
         <div class="team-solo__bio">
           <h3>{team[0].name}</h3>
@@ -503,10 +503,10 @@ import { certifications } from '../data/certifications';
   .team-solo__image img {
     position: relative;
     width: 100%;
-    max-width: 320px;
+    max-width: 460px;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.14));
   }
 
   .team-solo__bio {

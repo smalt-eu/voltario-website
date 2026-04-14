@@ -125,6 +125,9 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
         </form>
 
         <div class="cform-success" id={`success-${id}`} hidden>
+          <div class="cform-success__icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
           <p class="cform-success__title">Nachricht erfolgreich gesendet!</p>
           <p class="cform-success__sub">Vielen Dank – wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
         </div>
@@ -176,14 +179,21 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
             service_interested_in: leistungId ? { id: leistungId, name: leistungName } : undefined,
             acquisition_medium: leadOrigin ? 'organic' : 'website',
             acquisition_source: leadOrigin ? 'google_my_business' : 'partner_website',
-            partner_name: { name: 'Voltario' },
+            partner_name: { name: 'Voltario Elektrotechnik' },
             sub_channel_source_detail: 'Website Form',
           }),
         });
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        form.hidden = true;
+        // Reset the button state (even though the form will be hidden)
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.hidden = false;
+        if (submitSending) submitSending.hidden = true;
+
+        // Hide the form — use style.display because .cform has display: flex
+        // which overrides the user-agent [hidden] rule
+        form.style.display = 'none';
         if (successEl) successEl.hidden = false;
       } catch {
         if (submitBtn) submitBtn.disabled = false;
@@ -246,8 +256,9 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: hsl(218, 70%, 45% / 0.15);
-    color: var(--color-accent);
+    background: hsl(218, 80%, 70% / 0.18);
+    border: 1px solid hsl(218, 80%, 70% / 0.25);
+    color: hsl(218, 85%, 78%);
     font-size: var(--text-xs);
     font-weight: 700;
     text-transform: uppercase;
@@ -261,7 +272,7 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--color-accent);
+    background: hsl(218, 85%, 78%);
     animation: pulse-dot 2s infinite;
     flex-shrink: 0;
   }
@@ -311,7 +322,7 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    color: var(--color-accent);
+    color: hsl(218, 85%, 78%);
   }
 
   .info-contact-row div {
@@ -343,7 +354,7 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
 
   .info-contact-row:hover .info-contact-arrow {
     transform: translateX(3px);
-    color: var(--color-accent);
+    color: hsl(218, 85%, 78%);
   }
 
   /* ---- RIGHT PANEL (form) ---- */
@@ -476,21 +487,53 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
   .cform-success {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    text-align: center;
+    gap: 0.75rem;
     flex: 1;
-    padding: var(--space-xl) 0;
+    padding: var(--space-2xl) var(--space-md);
+    animation: successFadeIn 0.5s ease both;
+  }
+
+  .cform-success__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(218, 70%, 45% / 0.12), hsl(218, 70%, 45% / 0.04));
+    border: 1px solid hsl(218, 70%, 45% / 0.25);
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+    animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
   }
 
   .cform-success__title {
     font-family: var(--font-heading);
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
     font-weight: 700;
-    color: var(--color-primary);
+    color: var(--color-dark);
+    margin: 0;
   }
 
   .cform-success__sub {
     font-size: var(--text-base);
     color: var(--color-text-light);
+    line-height: 1.6;
+    max-width: 360px;
+    margin: 0;
+  }
+
+  @keyframes successFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes successPop {
+    0%   { opacity: 0; transform: scale(0.6); }
+    60%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
   }
 </style>

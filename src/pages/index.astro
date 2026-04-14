@@ -5,6 +5,7 @@ import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
 import { staedte } from '../data/staedte';
 import { siteConfig } from '../data/siteConfig';
+import { team } from '../data/team';
 import { whyUs } from '../data/whyUs';
 
 const leistungen = (await getCollection('leistungen')).sort(
@@ -41,6 +42,8 @@ const stats = [
     ctaHref="/kontakt"
     ctaSecondaryText="Leistungen ansehen"
     ctaSecondaryHref="/leistungen"
+    heroPhoto="/images/hero-kefah.png"
+    heroPhotoAlt={`${team[0].name} – Geschäftsführer ${siteConfig.firmenname}`}
   />
 
   <!-- Stats -->
@@ -316,7 +319,7 @@ const stats = [
     height: 40px;
     border-radius: var(--radius-sm);
     background: var(--accent-gradient);
-    color: var(--color-primary);
+    color: var(--color-white);
     font-size: var(--text-base);
     font-weight: 800;
     flex-shrink: 0;

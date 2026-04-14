@@ -83,10 +83,20 @@ const {
     max-width: 680px;
   }
 
-  /* Split layout when heroPhoto is present */
+  /* ============================================================
+     Split layout (hero with foreground photo)
+     ============================================================
+     Goals:
+     - Hero exactly 100vh tall — fits perfectly above the fold
+     - Photo bottom-anchored to the hero's bottom edge
+     - Photo fully visible inside the viewport (no clipping)
+     - Text vertically centered next to the photo
+     ============================================================ */
   .hero--split {
+    --hero-content-height: calc(100vh - var(--navbar-height, 72px));
     align-items: stretch;
-    min-height: 92vh;
+    min-height: 100vh;
+    padding-top: var(--navbar-height, 72px);
     overflow: hidden;
     isolation: isolate;
     background-color: transparent !important;
@@ -96,12 +106,12 @@ const {
       linear-gradient(135deg, hsl(210, 30%, 7%) 0%, hsl(210, 25%, 11%) 55%, hsl(210, 22%, 9%) 100%) !important;
   }
 
-  /* Hide the default overlay element for split layout — backgrounds live on .hero--split itself */
+  /* Hide the default overlay element for split layout */
   .hero--split .hero__overlay {
     display: none;
   }
 
-  /* Subtle grid pattern overlay (matches subpage heroes) */
+  /* Grid pattern overlay */
   .hero--split::before {
     content: '';
     position: absolute;
@@ -116,7 +126,7 @@ const {
     z-index: -1;
   }
 
-  /* Red glow accent (matches subpage heroes) */
+  /* Soft navy glow accent in upper right */
   .hero--split::after {
     content: '';
     position: absolute;
@@ -131,41 +141,48 @@ const {
     z-index: -1;
   }
 
+  /* Inner grid: 2 columns, photo bottom-anchored, text vertically centered */
   .hero--split .hero__inner {
     display: grid;
-    grid-template-columns: 1.2fr 1.3fr;
+    grid-template-columns: 1.1fr 1fr;
     align-items: end;
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+  }
+
+  /* Text column */
+  .hero--split .hero__content {
+    max-width: 620px;
+    justify-self: start;
+    align-self: center;
     padding-bottom: 0;
   }
 
-  .hero--split .hero__content {
-    max-width: 620px;
-    padding-bottom: var(--space-3xl);
-  }
-
   .hero--split .hero__eyebrow {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
   .hero--split .hero__title {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     letter-spacing: -0.02em;
   }
 
   .hero--split .hero__subtitle {
     max-width: 540px;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
   }
 
+  /* Photo column: bottom-anchored, image flush with hero bottom edge */
   .hero__photo {
+    position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    position: relative;
     align-self: end;
-    margin-bottom: 0;
     overflow: visible;
+    min-width: 0;
   }
 
   .hero__photo-glow {
@@ -174,34 +191,32 @@ const {
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
-    height: 70%;
+    height: 75%;
     border-radius: 50%;
-    background: radial-gradient(ellipse, hsl(218, 70%, 45% / 0.18) 0%, transparent 70%);
-    filter: blur(50px);
+    background: radial-gradient(circle at center, hsl(218, 70%, 45% / 0.28) 0%, hsl(218, 70%, 45% / 0.10) 45%, transparent 70%);
+    filter: blur(70px);
     pointer-events: none;
   }
 
+  /*
+    Photo sizing — the key rules:
+    - height capped at the available content area height (= viewport - navbar)
+      so it's ALWAYS fully visible at exactly 100vh
+    - width: auto so the natural square aspect ratio is preserved
+    - bottom-anchored via flex align-items: flex-end + display: block
+    - max-width: none so the square image is allowed to overflow its grid column
+      (the parent has overflow: visible and the section has overflow: hidden)
+  */
   .hero__photo img {
     position: relative;
     display: block;
-    /* Fluid size: scales from ~55vh on small laptops to ~95vh on large monitors */
-    height: clamp(520px, 70vw, 95vh);
-    max-height: 95vh;
     width: auto;
-    max-width: 100%;
+    height: var(--hero-content-height);
+    max-height: var(--hero-content-height);
+    max-width: none;
     object-fit: contain;
-    object-position: bottom right;
-    /* Fluid translate: stays centered on narrow screens, shifts right on wide screens */
-    transform: translateX(clamp(0%, 2vw, 18%));
-    filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.4));
-  }
-
-  /* On wider screens we can afford a bigger photo and more shift */
-  @media (min-width: 1400px) {
-    .hero__photo img {
-      max-width: 140%;
-      transform: translateX(20%);
-    }
+    object-position: bottom center;
+    filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.45));
   }
 
   @media (max-width: 900px) {
@@ -233,23 +248,24 @@ const {
     .hero__photo {
       order: 1;
       width: 100%;
-      max-width: 340px;
+      max-width: 360px;
       margin: 0 auto;
-      opacity: 0.95;
+      align-self: center;
+      overflow: visible;
+      aspect-ratio: 1 / 1;
     }
 
     .hero__photo-glow {
-      width: 60%;
-      height: 30%;
+      inset: 0;
+      transform: scale(1);
     }
 
     .hero__photo img {
-      /* Reset desktop fluid sizing */
-      height: auto;
-      max-height: 38vh;
+      width: 100%;
+      height: 100%;
+      max-height: 45vh;
       max-width: 100%;
-      object-position: bottom center;
-      transform: none;
+      object-fit: contain;
     }
 
     .hero--split .hero__content {
