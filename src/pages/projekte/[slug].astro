@@ -63,19 +63,19 @@ const formattedDate = projekt.data.date.toLocaleDateString('de-DE', {
     </div>
   </div>
 
-  <!-- Cover image -->
-  <div class="cover-image">
-    <div class="container">
-      <img src={projekt.data.coverImage} alt={projekt.data.title} />
-    </div>
-  </div>
-
   <!-- Main content -->
   <section class="section">
     <div class="container">
       <div class="projekt-layout">
         <article class="prose">
           <Content />
+
+          {/* Images inline after text */}
+          {projekt.data.coverImage && (
+            <div class="inline-cover">
+              <img src={projekt.data.coverImage} alt={projekt.data.title} />
+            </div>
+          )}
         </article>
 
         <aside class="projekt-sidebar">
@@ -162,7 +162,7 @@ const formattedDate = projekt.data.date.toLocaleDateString('de-DE', {
               variant="project"
               title={p.data.title}
               description={p.data.description}
-              image={p.data.coverImage}
+              image={p.data.coverImage || ''}
               href={`/projekte/${p.slug}`}
               meta={p.data.standort}
             />
@@ -177,18 +177,17 @@ const formattedDate = projekt.data.date.toLocaleDateString('de-DE', {
 </Layout>
 
 <style>
-  /* Cover */
-  .cover-image {
-    background: var(--color-dark);
-    padding: 0 0 var(--space-2xl);
+  /* Inline cover image (below text) */
+  .inline-cover {
+    margin-top: var(--space-xl);
   }
 
-  .cover-image img {
+  .inline-cover img {
     width: 100%;
-    max-height: 540px;
+    max-height: 480px;
     object-fit: cover;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   /* Layout */

@@ -34,7 +34,7 @@ const projekte = defineCollection({
     date: z.date(),
     leistung: z.string(),
     standort: z.string(),
-    coverImage: z.string(),
+    coverImage: z.string().optional(),
     images: z.array(z.string()).default([]),
     description: z.string(),
     tags: z.array(z.string()).default([]),

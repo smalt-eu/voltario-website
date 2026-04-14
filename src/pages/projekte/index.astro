@@ -52,7 +52,7 @@ const leistungMap = Object.fromEntries(leistungenData.map((l) => [l.slug, l.data
               variant="project"
               title={p.data.title}
               description={p.data.description}
-              image={p.data.coverImage}
+              image={p.data.coverImage || ''}
               href={`/projekte/${p.slug}`}
               meta={p.data.standort}
               badge={leistungMap[p.data.leistung] ?? p.data.leistung}
