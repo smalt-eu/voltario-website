@@ -8,7 +8,7 @@ features:
   - "Zählerschranktausch nach aktueller TAB"
   - "Nachrüstung von FI-Schutzschaltern"
   - "Modernisierung der Leitungsführung"
-  - "Vorbereitung für PV, Wallbox und Wärmepumpe"
+  - "Vorbereitung für PV-Anlage und Wallbox"
   - "Beratung zu Fördermöglichkeiten"
 order: 8
 ---

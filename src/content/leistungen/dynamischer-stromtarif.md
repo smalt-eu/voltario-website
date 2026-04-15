@@ -1,6 +1,6 @@
 ---
 title: "Dynamischer Stromtarif"
-description: "Smart Meter, Home Energy Management und dynamische Stromtarife in Berlin und Brandenburg – intelligent Strom sparen. Installation vom Elektro-Fachbetrieb."
+description: "Smart Meter, Home Energy Management und dynamische Stromtarife in Berlin und Brandenburg – intelligent Strom sparen. Installation vom Elektro-Ingenieursbetrieb."
 icon: "bolt"
 image: "/images/leistungen/dynamischer-stromtarif.jpg"
 features:
@@ -23,7 +23,7 @@ Ein intelligenter Zähler (Smart Meter) erfasst Ihren Verbrauch im 15-Minuten-Ta
 
 ### Smartes Energiemanagement
 
-Ein Home-Energy-Management-System (HEMS) steuert Ihre Verbraucher automatisch: Die Wärmepumpe läuft, wenn der Strom günstig ist. Das E-Auto lädt bei Niedrigtarif. Der Batteriespeicher wird gezielt be- und entladen.
+Ein Home-Energy-Management-System (HEMS) steuert Ihre Verbraucher automatisch: Das E-Auto lädt bei Niedrigtarif. Der Batteriespeicher wird gezielt be- und entladen. Große Verbraucher laufen dann, wenn der Strom günstig ist.
 
 ### Besonders lohnend mit PV
 

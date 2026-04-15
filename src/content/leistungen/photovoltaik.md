@@ -1,13 +1,13 @@
 ---
 title: "Photovoltaik & Batteriespeicher"
-description: "Photovoltaik-Komplettlösung vom Elektro-Fachbetrieb aus Berlin: Planung, Installation und Batteriespeicher – SMA, E3DC, Kostal & Fronius. Jetzt Angebot anfragen."
+description: "Photovoltaik-Komplettlösung vom Elektro-Ingenieursbetrieb aus Berlin: Planung, Installation und Batteriespeicher – SMA, E3DC, Kostal & Fronius. Jetzt Angebot anfragen."
 icon: "sun"
 image: "/images/leistungen/photovoltaik.jpg"
 features:
   - "Individuelle Anlagenplanung und Dimensionierung"
   - "Hochwertige Module und Wechselrichter (SMA, E3DC, Kostal, Fronius, Sungrow, Viessmann)"
   - "Batteriespeicher für maximale Eigenverbrauchsquote"
-  - "Anbindung an Wallbox und Wärmepumpe"
+  - "Anbindung an Wallbox und Energiemanagement"
   - "Inselanlage und Notstromlösungen"
   - "Monitoring und Wartung nach Installation"
 order: 1

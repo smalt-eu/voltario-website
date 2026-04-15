@@ -35,15 +35,17 @@ const stats = [
 >
   <!-- Hero -->
   <Hero
-    eyebrow={`Ihr Partner in ${siteConfig.stadt}`}
     title={siteConfig.tagline}
     subtitle={siteConfig.description}
-    ctaText="Kostenlos anfragen"
-    ctaHref="/kontakt"
+    ctaText="Jetzt anrufen"
+    ctaHref={`tel:${siteConfig.telefon.replace(/\s/g, '')}`}
     ctaSecondaryText="Leistungen ansehen"
     ctaSecondaryHref="/leistungen"
     heroPhoto="/images/hero-kefah.png"
     heroPhotoAlt={`${team[0].name} – Geschäftsführer ${siteConfig.firmenname}`}
+    googleReviewRating="5.0"
+    googleReviewLabel="Sterne"
+    googleReviewHref="https://www.google.com/search?q=Voltario+Elektrotechnik+Berlin"
   />
 
   <!-- Stats -->
@@ -105,7 +107,7 @@ const stats = [
           <h2>Qualität, die man sieht. Verlässlichkeit, die man spürt.</h2>
           <div class="divider divider--left"></div>
           <p>
-            Als Elektro-Fachbetrieb aus {siteConfig.stadt} stehen wir für fachgerechte Arbeit,
+            Als Elektro-Ingenieursbetrieb aus {siteConfig.stadt} stehen wir für fachgerechte Arbeit,
             transparente Kommunikation und persönlichen Service. Von der Photovoltaikanlage
             bis zur Elektroinstallation – wir übernehmen Verantwortung für jedes Projekt.
           </p>

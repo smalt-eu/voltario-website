@@ -1,12 +1,12 @@
 ---
 title: "Zählerschranksanierung"
-description: "Zählerschrank-Modernisierung nach aktueller TAB und VDE-Norm in Berlin und Brandenburg – Voraussetzung für PV, Wallbox und Wärmepumpe."
+description: "Zählerschrank-Modernisierung nach aktueller TAB und VDE-Norm in Berlin und Brandenburg – Voraussetzung für PV-Anlage und Wallbox."
 icon: "gauge"
 image: "/images/leistungen/zaehlerschranksanierung.jpg"
 features:
   - "Bestandsaufnahme und Zustandsbewertung"
   - "Erneuerung nach aktueller TAB und VDE-Norm"
-  - "Vorbereitung für PV-Anlage, Wallbox und Wärmepumpe"
+  - "Vorbereitung für PV-Anlage und Wallbox"
   - "Koordination mit dem Netzbetreiber"
   - "Einsatz moderner Mess- und Schutztechnik"
   - "Schnelle und saubere Umsetzung"
@@ -15,7 +15,7 @@ order: 3
 
 ## Zählerschranksanierung – Sicherheit und Zukunftsfähigkeit
 
-Ein veralteter Zählerschrank ist nicht nur ein Sicherheitsrisiko, sondern auch ein Hindernis für die Installation moderner Energietechnik wie Photovoltaik, Wallbox oder Wärmepumpe. Wir bringen Ihren Zählerschrank auf den neuesten Stand.
+Ein veralteter Zählerschrank ist nicht nur ein Sicherheitsrisiko, sondern auch ein Hindernis für die Installation moderner Energietechnik wie Photovoltaik oder Wallbox. Wir bringen Ihren Zählerschrank auf den neuesten Stand.
 
 ### Warum sanieren?
 

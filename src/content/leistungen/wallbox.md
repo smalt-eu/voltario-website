@@ -1,6 +1,6 @@
 ---
 title: "Wallbox"
-description: "Wallbox-Installation in Berlin & Brandenburg: sicheres Laden zuhause, optional mit PV-Überschuss und Lastmanagement für WEG. Vom zertifizierten Elektro-Fachbetrieb."
+description: "Wallbox-Installation in Berlin & Brandenburg: sicheres Laden zuhause, optional mit PV-Überschuss und Lastmanagement für WEG. Vom zertifizierten Elektro-Ingenieursbetrieb."
 icon: "car"
 image: "/images/leistungen/wallbox.jpg"
 features:

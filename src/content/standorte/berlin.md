@@ -9,7 +9,7 @@ hours: "Mo – Fr: 08:00 – 17:00 Uhr"
 order: 1
 ---
 
-## Ihr Elektro-Fachbetrieb in Berlin
+## Ihr Elektro-Ingenieursbetrieb in Berlin
 
 Unser Firmensitz in Berlin-Pankow (Französisch Buchholz) ist der Ausgangspunkt für alle Projekte in der Hauptstadtregion. Von hier aus betreuen wir Kunden in ganz Berlin, im Berliner Umland und in Brandenburg.
 

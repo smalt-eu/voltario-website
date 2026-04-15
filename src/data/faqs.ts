@@ -22,17 +22,17 @@ export const faqs: Record<string, FaqItem[]> = {
     {
       question: 'Lohnt sich ein Batteriespeicher zusätzlich zur PV-Anlage?',
       answer:
-        'Mit einem Batteriespeicher steigt Ihre Eigenverbrauchsquote von rund 30 % auf bis zu 80 %. Das lohnt sich besonders in Kombination mit Wärmepumpe und Wallbox. Wir beraten Sie zur passenden Speichergröße und empfehlen Systeme von E3DC, SMA und Fronius – abgestimmt auf Ihren tatsächlichen Verbrauch.',
+        'Mit einem Batteriespeicher steigt Ihre Eigenverbrauchsquote von rund 30 % auf bis zu 80 %. Besonders in Kombination mit einer Wallbox lohnt sich die Investition. Wir beraten Sie zur passenden Speichergröße und empfehlen Systeme von E3DC, SMA und Fronius – abgestimmt auf Ihren tatsächlichen Verbrauch.',
     },
     {
       question: 'Welche Förderungen gibt es für Photovoltaik?',
       answer:
-        'Seit 2023 gilt beim Kauf einer PV-Anlage für Wohngebäude der Nullsteuersatz (0 % Umsatzsteuer). Zusätzlich gibt es regionale Programme sowie zinsgünstige KfW-Kredite. Wir beraten Sie zu den aktuellen Fördermöglichkeiten im Kreis Unna und NRW.',
+        'Seit 2023 gilt beim Kauf einer PV-Anlage für Wohngebäude der Nullsteuersatz (0 % Umsatzsteuer). Zusätzlich gibt es regionale Programme sowie zinsgünstige KfW-Kredite. Wir beraten Sie zu den aktuellen Fördermöglichkeiten in Berlin und Brandenburg.',
     },
     {
-      question: 'Können Sie die Anlage mit meiner Wallbox und Wärmepumpe kombinieren?',
+      question: 'Können Sie die Anlage mit meiner Wallbox kombinieren?',
       answer:
-        'Ja. Als Full-Service-Elektrobetrieb planen wir Ihr Energiesystem ganzheitlich: PV, Speicher, Wallbox und Wärmepumpe werden über ein Home-Energy-Management-System (HEMS) intelligent gesteuert, sodass Sie Ihren Solarstrom optimal nutzen können.',
+        'Ja. Als Elektro-Ingenieursbetrieb planen wir Ihr Energiesystem ganzheitlich: PV, Speicher und Wallbox werden über ein Home-Energy-Management-System (HEMS) intelligent gesteuert, sodass Sie Ihren Solarstrom optimal nutzen können.',
     },
   ],
 
@@ -59,26 +59,26 @@ export const faqs: Record<string, FaqItem[]> = {
     },
   ],
 
-  waermepumpen: [
+  elektroinstallation: [
     {
-      question: 'Welche Wärmepumpe eignet sich für mein Haus?',
+      question: 'Führen Sie auch Elektroprüfungen nach DIN VDE durch?',
       answer:
-        'Für die meisten Bestandsgebäude ist eine Luft-Wasser-Wärmepumpe die beste Wahl – sie ist effizient, vergleichsweise günstig in der Anschaffung und benötigt keine Erdbohrung. Wir prüfen in einer Vor-Ort-Analyse, welches Modell zu Ihrem Heizbedarf und Ihrer elektrischen Infrastruktur passt.',
+        'Ja. Als zertifizierter Elektro-Ingenieursbetrieb führen wir Erstprüfungen nach DIN VDE 0100-600, Wiederholungsprüfungen nach DIN VDE 0105-100 sowie DGUV V3-Prüfungen ortsfester und ortsveränderlicher Anlagen durch. Sie erhalten ein rechtssicheres Prüfprotokoll.',
     },
     {
-      question: 'Welche Förderungen gibt es für Wärmepumpen?',
+      question: 'Planen und installieren Sie Smart-Home-Systeme?',
       answer:
-        'Über die BEG (Bundesförderung für effiziente Gebäude) sind Zuschüsse von bis zu 70 % der förderfähigen Kosten möglich – abhängig von Einkommen, Heizungstausch und Klimageschwindigkeitsbonus. Wir informieren Sie zu den aktuellen Fördersätzen und unterstützen bei der Antragstellung.',
+        'Ja. Wir planen, installieren und programmieren KNX-Systeme und andere Smart-Home-Lösungen – von einzelnen Komponenten bis zur vollintegrierten Gebäudesystemtechnik. Licht, Beschattung, Heizung und Sicherheitstechnik lassen sich zentral steuern.',
     },
     {
-      question: 'Können Sie die Wärmepumpe elektrisch anbinden?',
+      question: 'Realisieren Sie auch strukturierte Verkabelung und Netzwerktechnik?',
       answer:
-        'Ja. Als Elektro-Fachbetrieb übernehmen wir die komplette elektrische Seite: Erweiterung oder Erneuerung des Zählerschranks, Absicherung, Zuleitung zur Wärmepumpe und Anbindung an Ihr Energiemanagement-System. Der Heizungsbauer wird auf Wunsch von uns koordiniert.',
+        'Ja. Wir projektieren und installieren strukturierte Gebäudeverkabelung, LAN- und WLAN-Netzwerke sowie Telekommunikationsanlagen – für Büros, Gewerbeimmobilien und anspruchsvolle Privatkunden.',
     },
     {
-      question: 'Kann ich meine Wärmepumpe mit Photovoltaik kombinieren?',
+      question: 'Arbeiten Sie auch für Gewerbe- und Industriekunden?',
       answer:
-        'Unbedingt. Die Kombination aus PV-Anlage, Batteriespeicher und Wärmepumpe ist energetisch und wirtschaftlich die beste Lösung. Die Wärmepumpe läuft bevorzugt bei PV-Überschuss und reduziert so Ihre Heizkosten drastisch.',
+        'Selbstverständlich. Ein Großteil unserer Projekte stammt aus dem gewerblichen und industriellen Bereich: von der Schaltanlagenplanung über Maschinenprüfungen nach DIN EN 60204-1 bis zur kompletten Elektroprojektierung für Neubauten und Sanierungen.',
     },
   ],
 };

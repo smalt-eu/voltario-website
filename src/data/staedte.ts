@@ -40,7 +40,7 @@ export const staedte: Stadt[] = [
     slug: 'berlin-spandau',
     name: 'Berlin-Spandau',
     region: 'Berlin',
-    beschreibung: 'In Spandau und Umgebung installieren wir PV-Anlagen, Wallboxen und Wärmepumpen für die Energiewende vor Ort.',
+    beschreibung: 'In Spandau und Umgebung installieren wir PV-Anlagen, Wallboxen und Smart-Home-Systeme für die Energiewende vor Ort.',
   },
   {
     slug: 'berlin-charlottenburg-wilmersdorf',
@@ -58,7 +58,7 @@ export const staedte: Stadt[] = [
     slug: 'berlin-steglitz-zehlendorf',
     name: 'Berlin-Steglitz-Zehlendorf',
     region: 'Berlin',
-    beschreibung: 'In Steglitz-Zehlendorf realisieren wir moderne Energielösungen für Wohnanlagen und Privatkunden – von PV bis Wärmepumpe.',
+    beschreibung: 'In Steglitz-Zehlendorf realisieren wir moderne Energielösungen für Wohnanlagen und Privatkunden – von PV-Anlagen bis Smart Home.',
   },
   {
     slug: 'berlin-tempelhof-schoeneberg',

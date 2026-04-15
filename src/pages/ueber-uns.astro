@@ -28,10 +28,22 @@ import { certifications } from '../data/certifications';
     <div class="container">
       <div class="intro-grid">
         <div class="intro-text">
-          <span class="eyebrow">Seit über {siteConfig.yearsInBusiness} Jahren</span>
-          <h2>{siteConfig.firmenname} – Ihr Partner in {siteConfig.stadt}.</h2>
+          <span class="eyebrow">Seit 2006 in Berlin</span>
+          <h2>{siteConfig.firmenname} – Ihr Elektro-Ingenieursbetrieb in {siteConfig.stadt}.</h2>
           <div class="divider divider--left"></div>
-          <p>{siteConfig.description}</p>
+          <p>
+            Seit {siteConfig.yearsInBusiness} Jahren planen und realisieren wir elektrotechnische
+            Anlagen für Privat-, Gewerbe- und Industriekunden in Berlin und Brandenburg.
+            Von der ersten Konzeption über die Ausführung bis zur Inbetriebnahme und
+            Dokumentation – alles aus einer Hand, normgerecht und mit dem Anspruch,
+            Qualität und Innovation zu verbinden.
+          </p>
+          <p>
+            Unser Leistungsspektrum umfasst Elektroinstallationen, Smart Home und
+            Gebäudesystemtechnik (KNX), strukturierte Verkabelung, Photovoltaik,
+            Wallbox-Installationen sowie zertifizierte Elektroprüfungen nach
+            DIN VDE und DGUV V3.
+          </p>
         </div>
         <div class="intro-image">
           <img src="/images/voltario-logo.png" alt={`${siteConfig.firmenname} Logo`} loading="lazy" />
@@ -62,9 +74,9 @@ import { certifications } from '../data/certifications';
           </div>
           <h3>Qualität</h3>
           <p>
-            Als Elektro-Fachbetrieb arbeiten wir normgerecht und mit zertifizierter
-            Markentechnik von SMA, E3DC, Kostal, Fronius und Viessmann. Jede Installation
-            wird sauber ausgeführt, sorgfältig dokumentiert und fachgerecht abgenommen.
+            Als zertifizierter Elektro-Ingenieursbetrieb arbeiten wir normgerecht nach
+            DIN VDE und dokumentieren jede Ausführung lückenlos. Mitglied der Handwerkskammer
+            Berlin und der Baukammer Berlin – für rechtssichere, fachgerechte Elektroinstallationen.
           </p>
         </div>
         <div class="value-card">
@@ -84,17 +96,16 @@ import { certifications } from '../data/certifications';
           </div>
           <h3>Nachhaltigkeit</h3>
           <p>
-            Wir treiben die Energiewende aktiv voran – mit Photovoltaik, Batteriespeichern,
-            Wärmepumpen und Wallboxen. Jedes Projekt ist ein Schritt in Richtung
-            Energieunabhängigkeit und CO₂-Reduktion.
+            Wir treiben die Energiewende aktiv voran – mit Photovoltaik, Batteriespeichern
+            und Wallboxen. Jedes Projekt ist ein Schritt in Richtung Energieunabhängigkeit
+            und CO₂-Reduktion.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Timeline – hidden for now -->
-  {false && (
+  <!-- Timeline -->
   <section class="section">
     <div class="container">
       <div class="section-header">
@@ -115,7 +126,6 @@ import { certifications } from '../data/certifications';
       </div>
     </div>
   </section>
-  )}
 
   <!-- Team -->
   <section class="section section--alt">

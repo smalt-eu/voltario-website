@@ -1,6 +1,6 @@
 ---
 title: "Elektroinstallation & Reparaturen"
-description: "Elektroinstallation, Reparatur & Smart-Home in Berlin und Brandenburg – fachgerecht vom Elektro-Fachbetrieb. Schneller Service, normgerecht ausgeführt."
+description: "Elektroinstallation, Reparatur & Smart-Home in Berlin und Brandenburg – fachgerecht vom Elektro-Ingenieursbetrieb. Schneller Service, normgerecht ausgeführt."
 icon: "zap"
 image: "/images/leistungen/elektroinstallation.jpg"
 features:
@@ -15,7 +15,7 @@ order: 2
 
 ## Elektroinstallation & Reparaturen – Zuverlässig und fachgerecht
 
-Ob Neubau, Sanierung oder Reparatur – als Elektro-Fachbetrieb führen wir alle Elektroarbeiten fachgerecht und normkonform aus. Privat- und Gewerbekunden vertrauen auf unsere Erfahrung und Zuverlässigkeit.
+Ob Neubau, Sanierung oder Reparatur – als Elektro-Ingenieursbetrieb führen wir alle Elektroarbeiten fachgerecht und normkonform aus. Privat- und Gewerbekunden vertrauen auf unsere Erfahrung und Zuverlässigkeit.
 
 ### Neubau und Bestand
 

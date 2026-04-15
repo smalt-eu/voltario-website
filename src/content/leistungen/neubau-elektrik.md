@@ -1,6 +1,6 @@
 ---
 title: "Neubau-Elektrik"
-description: "Komplette Elektroinstallation für Neubauten in Berlin und Brandenburg – inkl. Smart Home, PV- und Wallbox-Vorbereitung. Vom Elektro-Fachbetrieb aus der Region."
+description: "Komplette Elektroinstallation für Neubauten in Berlin und Brandenburg – inkl. Smart Home, PV- und Wallbox-Vorbereitung. Vom Elektro-Ingenieursbetrieb aus der Region."
 icon: "building"
 image: "/images/leistungen/neubau-elektrik.jpg"
 features:
