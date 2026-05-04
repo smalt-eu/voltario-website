@@ -1,8 +1,8 @@
 export const timeline = [
-  { year: '2006', title: 'Gründung', description: 'Kefah Rezek gründet das Unternehmen in Berlin mit dem Ziel, Planung und Ausführung elektrotechnischer Anlagen aus einer Hand anzubieten.' },
-  { year: '2010', title: 'Erste Großprojekte', description: 'Erfolgreiche Umsetzung komplexer Elektroinstallationen für Gewerbe- und Industriekunden in Berlin und Brandenburg.' },
-  { year: '2015', title: 'Zertifizierung & Erweiterung', description: 'Ausbau des Leistungsspektrums um Smart Home, Gebäudesystemtechnik, Netzwerktechnik und zertifizierte Elektroprüfungen nach DIN VDE.' },
-  { year: '2020', title: 'Photovoltaik & E-Mobility', description: 'Integration von Photovoltaikanlagen, Batteriespeichern und Wallbox-Installationen ins Portfolio – die Energiewende aktiv mitgestalten.' },
-  { year: '2024', title: 'Voltario Elektrotechnik GmbH', description: 'Aus dem Einzelbetrieb wird die Voltario Elektrotechnik GmbH – ein Elektro-Ingenieursbetrieb mit über 500 erfolgreich umgesetzten Projekten.' },
-  { year: 'Heute', title: 'Qualität trifft Innovation', description: 'Mit fast zwei Jahrzehnten Erfahrung und starken Herstellerpartnerschaften realisieren wir anspruchsvolle Elektroprojekte in der gesamten Hauptstadtregion.' },
+  { year: '2014', title: 'Diplom-Ingenieur', description: 'Abschluss als Diplom-Ingenieur für Funktechnik (Fachrichtung Telekommunikation) an der Vladimir-State-Universität, Russland.' },
+  { year: '2016', title: 'Ankunft in Berlin', description: 'Start der beruflichen Integration in Deutschland. Berlin wird zum Lebensmittelpunkt und Basis für die weitere Karriere in der Elektrotechnik.' },
+  { year: '2018', title: 'Elektrotechniker bei CorCom Berlin', description: 'Tätigkeit als Elektrotechniker (Stark- und Schwachstrom) mit Schwerpunkt auf TK-Anlagen, Alarmanlagen, Sicherheitstechnik, Schwesternruf/Lichtruf sowie Elektroinstallation und Wartung.' },
+  { year: '2019', title: 'Ingenieur-Zulassung Baukammer Berlin', description: 'Anerkennung und Genehmigung zur Führung der Berufsbezeichnung Ingenieur durch die Baukammer Berlin, Fachrichtung Funktechnik.' },
+  { year: '2020', title: 'Fachplaner Nachrichtentechnik', description: 'Fachplaner für Nachrichtentechnik (KGR 450) im Ingenieurbüro für Krankenhaustechnik GmbH & Co. KG – Planung und Koordination anspruchsvoller TK- und Gebäudetechnikprojekte.' },
+  { year: '2024', title: 'Gründung Voltario Elektrotechnik GmbH', description: 'Kefah Rezek gründet die Voltario Elektrotechnik GmbH – ein Elektro-Ingenieursbetrieb mit Fokus auf Planung, Ausführung und Inbetriebnahme elektrotechnischer Anlagen aus einer Hand in Berlin.' },
 ];

@@ -19,7 +19,7 @@ import { certifications } from '../data/certifications';
         <span class="current">Über uns</span>
       </nav>
       <h1>Über uns</h1>
-      <p>Familienunternehmen. Handwerkskunst. Bayerische Werte.</p>
+      <p>Elektro-Ingenieursbetrieb. Fachplanung. Berliner Qualität.</p>
     </div>
   </div>
 
@@ -28,7 +28,7 @@ import { certifications } from '../data/certifications';
     <div class="container">
       <div class="intro-grid">
         <div class="intro-text">
-          <span class="eyebrow">Seit 2006 in Berlin</span>
+          <span class="eyebrow">Seit 2016 in Berlin</span>
           <h2>{siteConfig.firmenname} – Ihr Elektro-Ingenieursbetrieb in {siteConfig.stadt}.</h2>
           <div class="divider divider--left"></div>
           <p>
@@ -46,7 +46,7 @@ import { certifications } from '../data/certifications';
           </p>
         </div>
         <div class="intro-image">
-          <img src="/images/voltario-logo.png" alt={`${siteConfig.firmenname} Logo`} loading="lazy" />
+          <img src="/images/hero-kefah.png" alt={`${siteConfig.inhaber} – ${siteConfig.firmenname}`} loading="lazy" />
           <div class="intro-badge">
             <span class="intro-badge__number">{siteConfig.yearsInBusiness}+</span>
             <span class="intro-badge__label">Jahre Erfahrung</span>
@@ -143,7 +143,9 @@ import { certifications } from '../data/certifications';
         <div class="team-solo__bio">
           <h3>{team[0].name}</h3>
           <p class="team-solo__role">{team[0].role}</p>
-          {team[0].bio && <p class="team-solo__text">{team[0].bio}</p>}
+          {team[0].bio && (team[0].bio as string[]).map((paragraph: string) => (
+            <p class="team-solo__text">{paragraph}</p>
+          ))}
         </div>
       </div>
     </div>
@@ -234,27 +236,25 @@ import { certifications } from '../data/certifications';
 
   .intro-image {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg-alt);
     border-radius: var(--radius-xl);
-    padding: var(--space-3xl);
     min-height: 520px;
     box-shadow: var(--shadow-sm);
+    overflow: hidden;
   }
 
   .intro-image img {
     width: 100%;
-    max-width: 360px;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    min-height: 520px;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
   }
 
   .intro-badge {
     position: absolute;
-    bottom: -1.5rem;
-    left: -1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
     background: var(--color-primary);
     color: var(--color-white);
     border-radius: var(--radius-lg);
@@ -279,8 +279,8 @@ import { certifications } from '../data/certifications';
 
   @media (max-width: 480px) {
     .intro-badge {
-      bottom: 1rem;
-      left: 1rem;
+      bottom: 0.75rem;
+      left: 0.75rem;
     }
   }
 

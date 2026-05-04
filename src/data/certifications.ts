@@ -1,5 +1,5 @@
 export const certifications = [
-  'Elektro-Ingenieursbetrieb seit 2006',
+  'Elektro-Ingenieursbetrieb seit 2014',
   'Mitglied Handwerkskammer Berlin (Nr. 143116)',
   'Mitglied Baukammer Berlin (Nr. 11612)',
   'Erstprüfung nach DIN VDE 0100-600',
@@ -9,4 +9,7 @@ export const certifications = [
   'Zertifizierter Photovoltaik-Installateur',
   'BMA/SAA Brandmelde- und Sicherheitstechnik',
   'Eintrag Handelsregister HRB 283035 B, AG Charlottenburg',
+  'Zertifizierung Fachplaner/Facherrichter für Rufanlagen nach DIN VDE 0834-1',
+  'Zertifizierung der Vergabe- und Vertragsordnung für Bauleistungen (VOB)',
+  'Fachplaner KG 450 / KG 440',
 ];
