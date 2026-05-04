@@ -106,16 +106,16 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
   }
 
   .footer__logo-img {
-    height: 120px;
+    height: 160px;
     width: auto;
     filter: brightness(0) invert(1);
   }
 
   .footer__brand p {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     line-height: 1.7;
     margin-bottom: var(--space-md);
-    max-width: 320px;
+    max-width: 380px;
   }
 
   .footer__contact-info {
@@ -125,7 +125,7 @@ const allLeistungen = (await getCollection('leistungen')).sort((a, b) => (a.data
   }
 
   .footer__contact-info a {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: rgba(255,255,255,0.6);
     text-decoration: none;
     transition: color var(--transition-fast);
